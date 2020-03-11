@@ -25,3 +25,13 @@ Route::put('/api/user/update', 'UserController@update');
 Route::post('/api/user/upload', 'UserController@upload')->middleware(ApiAuthMiddleware::class);
 Route::get('/api/user/avatar/{filename}', 'UserController@getImage');
 Route::get('/api/user/detail/{id}', 'UserController@detail');
+
+//rutas para el controlador de lugares
+Route::resource('api/lugares', 'LugaresController');
+
+//rutas para el controlador de vehiculos
+Route::resource('api/vehiculos', 'vehiculosController');
+
+//rutas para el controlador de solicitudes de eventos
+Route::resource('api/eventos', 'eventosController');
+
