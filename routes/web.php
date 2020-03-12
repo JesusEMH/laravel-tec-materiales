@@ -35,3 +35,9 @@ Route::resource('api/vehiculos', 'vehiculosController');
 //rutas para el controlador de solicitudes de eventos
 Route::resource('api/eventos', 'eventosController');
 
+//rutas para el controlador de solicitudes de salidas
+Route::resource('api/salidas', 'salidasController');
+
+//rutas para el controlador de solicitudes de mantenimiento
+Route::resource('api/mantenimiento', 'mantenimientoController');
+
