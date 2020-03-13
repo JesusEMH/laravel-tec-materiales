@@ -38,6 +38,10 @@ Route::resource('api/departamentos', 'departamentosController');
 //rutas para el controlador de status
 Route::resource('api/status', 'statusVehiculoController');
 
+//rutas para el controlador de ubicaciones
+Route::resource('api/ubicaciones', 'ubicacionController');
+
+
 //rutas para el controlador de solicitudes de eventos
 Route::resource('api/eventos', 'eventosController');
 Route::post('/api/eventos/upload', 'eventosController@upload');
