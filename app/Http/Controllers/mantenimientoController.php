@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\helpers\JwtAuth;
 use App\Mantenimiento;
+use App\Lugar;
 
 class mantenimientoController extends Controller
 {
@@ -15,7 +16,7 @@ class mantenimientoController extends Controller
 	}
 
 	public function index(){
-		$mantenimiento = Mantenimiento::all()->load('lugares');
+		$mantenimiento = Mantenimiento::all()->load('users')->load('lugares');
 
 		return response()->json([
 			'code' => 200,
@@ -74,6 +75,7 @@ class mantenimientoController extends Controller
 			$mantenimiento->fecha = $params_array['fecha'];
 			$mantenimiento->hora_inicio = $params_array['hora_inicio'];
 			$mantenimiento->hora_final = $params_array['hora_final'];
+			$mantenimiento->status = "pendiente";
 			$mantenimiento->save();
 
 			$data = [

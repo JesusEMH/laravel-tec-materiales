@@ -15,7 +15,7 @@ class eventosController extends Controller
 	}
 
     public function index(){
-    	$eventos = Evento::all()->load('lugares');
+    	$eventos = Evento::all()->load('lugares')->load('users');
 
     	return response()->json([
     		'code' => 200,
@@ -25,7 +25,7 @@ class eventosController extends Controller
     }
 
     public function show($id){
-    	$evento = Evento::find($id)->load('lugares');
+    	$evento = Evento::find($id)->load('lugares')->load('users');
 
     	if(is_object($evento)){
     		$data = [
@@ -77,10 +77,10 @@ class eventosController extends Controller
 	    		$evento->contenido = $params_array['contenido'];
 	    		$evento->usuario_id = $user->sub;
 	    		$evento->lugar_id = $params_array['lugar_id'];
-	    		$evento->distribucion = $params_array['distribucion'];
 	    		$evento->hora_inicio = $params_array['hora_inicio'];
 	    		$evento->hora_final = $params_array['hora_final'];
 	    		$evento->fecha = $params_array['fecha'];
+                $evento->status = "pendiente";
 	    		$evento->save();
 
 	    		$data = [
@@ -182,7 +182,7 @@ class eventosController extends Controller
 
 	    	//devolver algo
 	    	$data = [
-	    		'code' = >200,
+	    		'code' => 200,
 	    		'status' => 'success',
 	    		'evento' => $evento
 	    	];

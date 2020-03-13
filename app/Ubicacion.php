@@ -10,7 +10,7 @@ class Ubicacion extends Model
 
     //relacion uno a muchos
     public function lugar(){
-    	return $this->hasMany('App/Lugar');
+    	return $this->hasMany('App\Lugar');
     }
 
 }

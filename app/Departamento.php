@@ -10,6 +10,6 @@ class Departamento extends Model
 
     //relacion uno a muchos
     public function Usuario(){
-    	return $this->hasMany('App/User');
+    	return $this->hasMany('App\User');
     }
 }

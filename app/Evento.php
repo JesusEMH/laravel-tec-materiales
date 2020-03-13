@@ -13,11 +13,11 @@ class Evento extends Model
     ];
 
     //relacion de uno a muchos inversa(muchos a uno)
-    public function user(){
-    	return $this->belongsTo('App/User', 'usuario_id');
+    public function users(){
+    	return $this->belongsTo('App\User', 'usuario_id');
     }
 
     public function lugares(){
-    	return $this->belongsTo('App/Lugar', 'lugar_id');
+    	return $this->belongsTo('App\Lugar', 'lugar_id');
     }
 }

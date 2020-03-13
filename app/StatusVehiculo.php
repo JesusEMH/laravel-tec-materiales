@@ -10,7 +10,7 @@ class StatusVehiculo extends Model
 
     //relacion uno a muchos
     public function vehiculo(){
-    	return $this->hasMany('App/Vehiculo');
+    	return $this->hasMany('App\Vehiculo');
     }
 
 }

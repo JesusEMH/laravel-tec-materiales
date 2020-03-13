@@ -15,7 +15,7 @@ class salidasController extends Controller
 	}
 
     public function index(){
-    	$salidas = Salida::all()->load('vehiculos');
+    	$salidas = Salida::all()->load('vehiculos')->load('users');
 
     	return response()->json([
     		'code' => 200,
@@ -26,7 +26,7 @@ class salidasController extends Controller
     }
 
     public function show($id){
-    	$salida = Salida::find($id)-load('vehiculos');
+    	$salida = Salida::find($id)-load('vehiculos')->load('users');
 
     	if(is_object($salida)){
     		$data = [
@@ -60,7 +60,7 @@ class salidasController extends Controller
     		$user = $this->getIdentity($request);
 
     		//validar los datos
-    		$validate = \validate::make($params_array, [
+    		$validate = \Validator::make($params_array, [
     			'titulo' => 'required',
     			'contenido' => 'required',
     			'vehiculo_id' => 'required'
@@ -75,6 +75,7 @@ class salidasController extends Controller
     		$salida->fecha = $params_array['fecha'];
     		$salida->hora_inicio = $params_array['hora_inicio'];
     		$salida->hora_final = $params_array['hora_final'];
+            $salida->status = "pendiente";
     		$salida->save();
 
     		$data = [

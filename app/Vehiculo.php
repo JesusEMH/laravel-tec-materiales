@@ -9,13 +9,13 @@ class Vehiculo extends Model
     protected $table = 'vehiculos';
 
     //relacion uno a muchos
-    public function salida(){
-    	return $this->hasMany('App/Salida');
+    public function salidas(){
+    	return $this->hasMany('App\Salida');
     }
 
     //relacion muchos a uno
     public function status(){
-    	return $this->belongsTo('App/StatusVehiculo', 'status_id');
+    	return $this->belongsTo('App\StatusVehiculo', 'status_id');
     }
 
 }

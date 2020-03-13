@@ -50,7 +50,8 @@ class LugaresController extends Controller
     		//validar los datos
 
     		$validate = \Validator::make($params_array, [
-    			'lugar' => 'required'
+    			'lugar' => 'required',
+                'ubicacion_id' => 'required'
     		]);
 
     		//guardar los datos
@@ -64,12 +65,12 @@ class LugaresController extends Controller
     		}else{
     			$lugar = new Lugar();
     			$lugar->lugar = $params_array['lugar'];
-    			$lugar->ubicacion = $params_array['ubicacion'];
+    			$lugar->ubicacion_id = $params_array['ubicacion_id'];
     			$lugar->save();
 
     			$data = [
     				'code' => 200,
-    				'status' = > 'success',
+    				'status' => 'success',
     				'lugar' => $lugar
     			];
     		}
@@ -88,40 +89,5 @@ class LugaresController extends Controller
 
     }
 
-    public function update($id, Request $request){
-    	//recoger los datos que me llegan por put
-    	$json = $request->input('json', null);
-    	$params_array = json_decode($json, true);
 
-    	if(!empty($params_array)){
-    		//validar los datos
-    		$validate = \Validator::make($params_array, [
-    			'lugar' => 'required'
-    		]);
-
-    		//quitar los datos que no quiero actualizar
-    		unset($params_array['created_at']);
-    		unset($params_array['id']);
-
-    		//actualizar el lugar
-    		$lugar = Lugar::where('id', $id)->update($params_array);
-
-    		$data = [
-    			'code' => 200,
-    			'status' => 'success',
-    			'lugar' => $params_array
-    		];
-
-
-
-    	}else{
-    		$data = [
-    			'code' => 404,
-    			'status' => 'error',
-    			'message' => 'los datos recibidos estan vacios o son erroneos'
-    		];
-    	}
-
-    	return response()->json($data, $data['code']);
-    }
 }
