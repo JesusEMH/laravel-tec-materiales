@@ -26,7 +26,7 @@ class salidasController extends Controller
     }
 
     public function show($id){
-    	$salida = Salida::find($id)-load('vehiculos')->load('users');
+    	$salida = Salida::find($id)->load('vehiculos')->load('users');
 
     	if(is_object($salida)){
     		$data = [
@@ -115,7 +115,7 @@ class salidasController extends Controller
     	if(!empty($params_array)){
 
     		//validar los datos
-    		$validate = \validator::make($params_array, [
+    		$validate = \Validator::make($params_array, [
     			'titulo' => 'required',
     			'contenido' => 'required',
     			'vehiculo_id' => 'required'
@@ -170,7 +170,7 @@ class salidasController extends Controller
     	$salida = Salida::where('id', $id)->where('usuario_id', $user->sub)->first();
 
     	//evaluar que la salida no este vacia
-    	is(!empty($salida)){
+    	if(!empty($salida)){
     		//borrar la salida
     		$salida->delete();
 
