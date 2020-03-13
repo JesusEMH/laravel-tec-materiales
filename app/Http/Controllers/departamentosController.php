@@ -4,39 +4,39 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Vehiculo;
+use App\Departamento;
 
-class vehiculosController extends Controller
+class departamentosController extends Controller
 {
 	public function __construct(){
 		$this->middleware('api.auth', ['except' => ['index', 'show']]);
 	}
 
     public function index(){
-    	$vehiculos = Vehiculo::all();
+    	$departamentos = Departamento::all();
 
     	return response()->json([
     		'code' => 200,
     		'status' => 'success',
-    		'vehiculos' => $vehiculos
+    		'departamentos' => $departamentos
     	], 200);
 
     }
 
     public function show($id){
-    	$vehiculo = Vehiculo::find($id);
+    	$departamento = Departamento::find($id);
 
-    	if(is_object($vehiculo)){
+    	if(is_object($departamento)){
     		$data = [
     			'code' => 200,
     			'status' => 'success',
-    			'vehiculo' => $vehiculo
+    			'departamento' => $departamento
     		];
     	}else{
     		$data = [
     			'code' => 404,
     			'status' => 'error',
-    			'message' => 'no se encuentra el vehiculo solicitado'
+    			'message' => 'no se encuentra el departamento solicitado'
     		];
     	}
 
@@ -54,26 +54,22 @@ class vehiculosController extends Controller
 
     		//validar la informacion
     		$validate = \Validator::make($params_array, [
-    			'vehiculo' => 'required',
-    			'marca' => 'required',
-    			'modelo' => 'required',
-    			'placas' => 'required',
-                'status_id' => 'required'
+    			'nombre' => 'required',
+    			'jefe' => 'required',
     		]);
 
     		//crear el vehiculo
-    		$vehiculo = new Vehiculo();
-    		$vehiculo->vehiculo = $params_array['vehiculo'];
-    		$vehiculo->marca = $params_array['marca'];
-    		$vehiculo->modelo = $params_array['modelo'];
-    		$vehiculo->placas = $params_array['placas'];
-            $vehiculo->status_id = $params_array['status_id'];
-    		$vehiculo->save();
+    		$departamento = new Departamento();
+    		$departamento->nombre = $params_array['nombre'];
+    		$departamento->jefe = $params_array['jefe'];
+    		$departamento->correo = $params_array['correo'];
+    		$departamento->telefono = $params_array['telefono'];
+    		$departamento->save();
 
     		$data = [
     			'code' => 200,
     			'status' => 'success',
-    			'vehiculo' => $vehiculo
+    			'departamento' => $departamento
     		];
 
     	}else{
@@ -98,10 +94,8 @@ class vehiculosController extends Controller
 
     		//validar los datos
     		$validate = \Validator::make($params_array, [
-    			'vehiculo' => 'required',
-    			'marca' => 'required',
-    			'modelo' => 'required',
-    			'placas' => 'required'
+    			'nombre' => 'required',
+    			'jefe' => 'required',
     		]);
 
     		//eliminar los datos que no queremos actualizar
@@ -109,12 +103,12 @@ class vehiculosController extends Controller
     		unset($params_array['created_at']);
 
     		//actualizar el vehiculo
-    		$vehiculo = Vehiculo::where('id', $id)->update($params_array);
+    		$departamento = Departamento::where('id', $id)->update($params_array);
 
     		$data = [
     			'code' => 200,
     			'status' => 'success',
-    			'vehiculo' => $params_array
+    			'departamento' => $params_array
     		];
 
     	}else{
