@@ -26,11 +26,12 @@ class UserController extends Controller
 
           //validar USUARIOS
           $validate  = \Validator::make($params_array, [
-            'nombre'          =>'required|alpha',
-            'apellidos'       =>'required|alpha',
+            'nombre'          =>'required',
+            'apellidos'       =>'required',
             'correo'          =>'required|email|unique:users',
             'contrasena'      =>'required',
             'numero_control'  =>'required',
+            'departamento_id' =>'required'
 
           ]);
 
@@ -54,8 +55,8 @@ class UserController extends Controller
             $user->correo = $params_array['correo'];
             $user->contrasena = $pwd;
             $user->rol = 'usuario';
-            $user->nick = 'default';
             $user->numero_control = $params_array['numero_control'];
+            $user->departamento_id = $params_array['departamento_id'];
 
             //guardar el usuario
             $user->save();
@@ -136,10 +137,10 @@ class UserController extends Controller
         
         //validar datos
         $validate  = \Validator::make($params_array, [
-            'nombre'          =>'required|alpha',
-            'apellidos'       =>'required|alpha',
+            'nombre'          =>'required',
+            'apellidos'       =>'required',
             'correo'          =>'required|email|unique:users'.$user->sub,
-            'departamento'    =>'required',
+            'departamento_id' =>'required',
             'descripcion'     =>'required'
 
           ]);
@@ -157,6 +158,7 @@ class UserController extends Controller
         //actualizar usuaro en la base de datos
 
         $user_update = User::where('id', $user->sub)->update($params_array);
+
 
         //devolver array con resultado
         $data = array(

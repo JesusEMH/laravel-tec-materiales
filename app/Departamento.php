@@ -9,7 +9,7 @@ class Departamento extends Model
     protected $table = 'departamentos';
 
     //relacion uno a muchos
-    public function reporte(){
-    	return $this->hasMany('App/Reporte');
+    public function Usuario(){
+    	return $this->hasMany('App/User');
     }
 }

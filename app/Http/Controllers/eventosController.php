@@ -11,7 +11,7 @@ use App\Evento;
 class eventosController extends Controller
 {
 	public function __construct(){
-		$this->middleware('api.auth', ['except' => ['index', 'show']]);
+		$this->middleware('api.auth', ['except' => ['index', 'show', 'getStatus', 'getSolicitudByUser']]);
 	}
 
     public function index(){
@@ -205,5 +205,81 @@ class eventosController extends Controller
     	$user = $jwtAuth->checkToken($token, true);
 
     	return $user;
+    }
+
+        public function upload(Request $request){
+        //recoger la imagen de la peticion
+        $image = $request->file('file0');
+
+        //validar la imagen
+        $validate = \Validator::make($request->all(), [
+            'file0' => 'required|image|mimes:jpg,jpeg,png,gif'
+        ]);
+
+        //guardar la imagen
+        if(!$image || $validate->fails()){
+            $data = [
+                'code' => 400,
+                'status' => 'error',
+                'message' => 'error al subir la imagen'
+            ];
+
+        }else{
+            $image_name = time().$image->getClientOriginalName();
+
+            \Storage::disk('images')->put($image_name, \File::get($image));
+
+            $data = [
+                'code' => 200,
+                'status' => 'success',
+                'image' => $image_name
+            ];
+
+        }
+
+        return response()->json($data, $data['code']);
+
+    }
+
+    public function getImage($filename){
+        //comprobar si existe el fichero
+        $isset = \Storage::disk('images')->exists($filename);
+
+        if($isset){
+            //conseguir la imagen
+            $file = \Storage::disk('images')->get($filename);
+
+            //devolver la imagen
+            return Response($file, 200);
+        }else{
+            //mostrar error
+            $data = [
+                'code' => 404,
+                'status' => 'error',
+                'message' => 'la imagen no existe'
+            ];
+        }
+        return Response()->json($data, $data['code']);
+        
+
+    }
+
+    public function getStatus($status){
+        $evento = Evento::where('status', $status)->get();
+
+        return response()->json([
+            'status' => 'success',
+            'evento' => $evento
+        ],200);
+    }
+
+
+    public function getSolicitudByUser($id){
+        $evento = Evento::where('usuario_id', $id)->get();
+
+        return response()->json([
+            'status' => 'success',
+            'evento' => $evento
+        ], 200);
     }
 }

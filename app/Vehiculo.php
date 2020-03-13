@@ -12,4 +12,10 @@ class Vehiculo extends Model
     public function salida(){
     	return $this->hasMany('App/Salida');
     }
+
+    //relacion muchos a uno
+    public function status(){
+    	return $this->belongsTo('App/StatusVehiculo', 'status_id');
+    }
+
 }

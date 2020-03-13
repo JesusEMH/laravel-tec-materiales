@@ -36,13 +36,18 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
+    //relacion de uno a muchos
     public function reporte(){
       return $this->hasMany('App\Reporte');
     }
 
-
+    //relacion d euno a muchos
     public function evento(){
       return $this->hasMany('App\Evento');
+    }
+    
+    //relacion de muchos a uno
+    public function departamento(){
+        return $this->belongsTo('App/Departamento', 'departamento_id');
     }
 }
