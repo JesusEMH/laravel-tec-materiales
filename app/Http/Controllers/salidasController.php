@@ -260,7 +260,7 @@ class salidasController extends Controller
     }
 
     public function getStatus($status){
-        $salidas = Salidas::where('status', $status)->get();
+        $salidas = Salida::where('status', $status)->get();
 
         return response()->json([
             'status' => 'success',
@@ -270,7 +270,7 @@ class salidasController extends Controller
 
 
     public function getSolicitudByUser($id){
-        $salidas = Mantenimiento::where('usuario_id', $id)->get();
+        $salidas = Salida::where('usuario_id', $id)->get();
 
         return response()->json([
             'status' => 'success',
